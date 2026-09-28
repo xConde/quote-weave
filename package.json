@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
-    "typecheck": "tsc --noEmit --project tsconfig.app.json"
+    "typecheck": "tsc --noEmit --project tsconfig.app.json",
+    "check:data": "node scripts/check-quote-weave-data.mjs && node scripts/check-quote-weave-data.spec.mjs"
   },
   "private": true,
   "packageManager": "npm@11.17.0",

@@ -13,7 +13,7 @@ npm start
 
 `npm run typecheck`, `npm run test:ci`, and `npm run build` cover the production code, reader behavior, and build. The app is an Angular 21 static site. Favorites and reading preferences stay in browser storage. Author summaries load from Wikipedia when requested.
 
-The 30-item quote corpus lives in `src/assets/data/quotes.json`. Each entry records its attribution status and source; `quote-map.json` supplies related quotes. The reader does not generate or rewrite quotations.
+The 30-item quote corpus lives in `src/assets/data/quotes.json`. Each entry records its attribution status and source; `quote-map.json` supplies related quotes. The reader does not generate or rewrite quotations. `npm run check:data` validates the corpus and map. The optional map generator in `scripts/quote-map-tooling` has its own lockfile, so its model dependencies are absent from normal app installs.
 
 ## License
 

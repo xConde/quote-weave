@@ -60,6 +60,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/data",
+                "output": "assets/data"
               }
             ],
             "styles": [

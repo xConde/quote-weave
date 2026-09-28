@@ -1,8 +1,14 @@
 # Quote Weave
 
+![The Quote Weave reader showing a quotation and related ideas](docs/images/reader.webp)
+
 A small reading space for sourced quotations. Move between a quote, its nearby ideas, and its original source at your own pace.
 
 Originally part of [edconde.com](https://edconde.com); this repository keeps the reader and its data together as a standalone app.
+
+The threads view groups nearby ideas without interrupting the reader:
+
+![Quote Weave threads view with connected quotations](docs/images/threads.webp)
 
 ## Run locally
 

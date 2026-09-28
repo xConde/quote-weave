@@ -17,4 +17,4 @@ The 30-item quote corpus lives in `src/assets/data/quotes.json`. Each entry reco
 
 ## License
 
-Application code is [MIT licensed](LICENSE). Quoted text and linked source material belong to their respective authors and publishers and are not covered by the code license. Bundled font licenses are included beside the font files in `public/assets/fonts`.
+Application code is [MIT licensed](LICENSE). Quoted text and linked source material belong to their respective authors and publishers and are not covered by the code license. Bundled font licenses are included beside the font files in `public/assets/fonts`. Inline icon paths are covered by the [Phosphor Icons license](third_party/PHOSPHOR-LICENSE).

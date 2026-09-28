@@ -1,0 +1,43 @@
+// =============================================================================
+// Quote-Weave Design Tokens — shared across the parent component and children.
+//
+// Each component SCSS does:
+//   @use '../styles/tokens' as *;
+//
+// (or ../../styles/tokens for nested children) to pull these into scope.
+// =============================================================================
+
+// Typography: the quote is the page, not a terminal. Georgia gives the reader
+// an editorial voice while the compact mono face keeps labels feeling indexed.
+$font-reading: Georgia, 'Times New Roman', serif;
+$font-label: 'Space Mono', 'Courier New', monospace;
+$font-typewriter: $font-label;
+$font-body: var(--font-primary, 'Roboto', sans-serif);
+
+// Type scale (fluid, 4px grid aligned)
+$type-quote-current: clamp(1.18rem, calc(var(--font-size) * 1.02), 1.85rem);
+$type-quote-previous: clamp(0.98rem, calc(var(--font-size) * 0.82), 1.25rem);
+$type-author: calc(var(--font-size) * 0.77);
+$type-badge: 0.7rem;
+
+// Touch target (WCAG 2.5.5 minimum — 44px / 2.75rem)
+$touch-target-min: 2.75rem;
+
+// Spacing (4px grid)
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-base: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+// Border radius (sharp system: 4px, 6px — technical-literary feel)
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-pill: 100px;
+
+// Animation (per design principles: 150ms micro, 200-250ms larger)
+$ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+$duration-micro: 150ms;
+$duration-base: 200ms;
+$duration-entrance: 300ms;

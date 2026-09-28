@@ -1,0 +1,99 @@
+@if (open()) {
+  @let shareState = state();
+  <div class="share-backdrop" (click)="close.emit()"></div>
+  <div
+    class="share-panel"
+    [class.open]="open()"
+    [appFocusTrap]="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qw-share-panel-title"
+  >
+    <div class="share-panel-header">
+      <span class="share-panel-title" id="qw-share-panel-title">Share this quote</span>
+      <button class="close-btn" aria-label="Close share preview" (click)="close.emit()">
+        <span class="icon" [innerHTML]="icon('x', 16)" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    @switch (shareState.status) {
+      @case ('rendering') {
+        <div class="share-status" role="status" aria-live="polite">
+          <progress class="share-progress" aria-label="Making quote card"></progress>
+          <p class="share-status-title">Making your quote card…</p>
+          <p class="share-status-detail">This usually takes a moment.</p>
+        </div>
+      }
+      @case ('ready') {
+        <div class="share-preview-image">
+          @if (failedImageUrl() !== shareState.previewUrl) {
+            <img
+              [src]="shareState.previewUrl"
+              [alt]="shareCardAlt(shareState.quote)"
+              (error)="markPreviewFailed(shareState.previewUrl)"
+            />
+          } @else {
+            <div class="share-card-fallback" role="img" [attr.aria-label]="shareCardAlt(shareState.quote)">
+              <span class="fallback-edition">Quote Weave / {{ shareState.quote.category }}</span>
+              <blockquote>“{{ shareState.quote.text }}”</blockquote>
+              <cite>{{ shareState.quote.author }}</cite>
+              <span class="fallback-provenance">{{ shareCardProvenance(shareState.quote) }}</span>
+            </div>
+          }
+        </div>
+        <div class="share-actions">
+          @if (failedImageUrl() === shareState.previewUrl) {
+            <button class="share-action-btn share-action-btn--primary" (click)="retry.emit()">Try image again</button>
+          } @else {
+            <button class="share-action-btn share-action-btn--primary" (click)="download.emit()">
+              <span class="icon" [innerHTML]="icon('download', 18)" aria-hidden="true"></span>
+              Download
+            </button>
+            @if (canNativeShare()) {
+              <button class="share-action-btn" (click)="nativeShare.emit()">
+                <span class="icon" [innerHTML]="icon('share', 18)" aria-hidden="true"></span>
+                Share
+              </button>
+            }
+          }
+          <button class="share-action-btn" (click)="copyText.emit()">Copy quote</button>
+        </div>
+      }
+      @case ('error') {
+        <div class="share-status share-status--error" role="alert">
+          <p class="share-status-title">The image didn’t come together.</p>
+          <p class="share-status-detail">{{ shareState.message }} You can try again or copy the quote as text.</p>
+        </div>
+        <div class="share-actions">
+          <button class="share-action-btn share-action-btn--primary" (click)="retry.emit()">Try again</button>
+          <button class="share-action-btn" (click)="copyText.emit()">
+            <span class="icon" [innerHTML]="icon('share', 18)" aria-hidden="true"></span>
+            Copy quote
+          </button>
+        </div>
+      }
+      @default {
+        <div class="share-status" role="status">
+          <p class="share-status-title">Preparing the share tools…</p>
+        </div>
+      }
+    }
+
+    <p class="share-copy-feedback" aria-live="polite">
+      @if (copyStatus() === 'copied') {
+        Quote copied.
+      } @else if (copyStatus() === 'error') {
+        Couldn’t copy automatically. Select the quote in the reader instead.
+      }
+    </p>
+    <p class="share-native-feedback" aria-live="polite" aria-atomic="true">
+      @if (nativeShareStatus() === 'shared') {
+        Shared.
+      } @else if (nativeShareStatus() === 'unavailable') {
+        This browser couldn’t share the image. Download it or copy the quote instead.
+      } @else if (nativeShareStatus() === 'error') {
+        Sharing didn’t complete. Download the card or copy the quote instead.
+      }
+    </p>
+  </div>
+}

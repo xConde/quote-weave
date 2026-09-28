@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 2,
+  "generatorVersion": "quote-map-v3",
+  "seed": 42,
+  "corpusDigest": "sha256:fbf28180d4c421fa6d122a013f8118a27e691febe8f932559f08e8533d858d04",
+  "labelReviewCorpusDigest": "sha256:fbf28180d4c421fa6d122a013f8118a27e691febe8f932559f08e8533d858d04",
+  "generatedBy": "scripts/generate-quote-map.mjs (Transformers.js + UMAP)",
+  "model": "Xenova/all-MiniLM-L6-v2",
+  "modelRevision": "751bff37182d3f1213fa05d7196b954e230abad9",
+  "tooling": {
+    "@xenova/transformers": "2.17.2",
+    "umap-js": "1.4.0"
+  },
+  "clusterCount": 4,
+  "clusters": [
+    {
+      "id": 0,
+      "label": "Weathering What Comes",
+      "blurb": "Courage, fate, and choosing a steady response.",
+      "count": 4
+    },
+    {
+      "id": 1,
+      "label": "Language & Systems",
+      "blurb": "How code, language, and restraint shape what we can make.",
+      "count": 8
+    },
+    {
+      "id": 2,
+      "label": "The Examined Frame",
+      "blurb": "Attention, judgment, and the craft of deciding what belongs in view.",
+      "count": 9
+    },
+    {
+      "id": 3,
+      "label": "Worlds in Motion",
+      "blurb": "Change, responsibility, love, and the realities we inhabit.",
+      "count": 9
+    }
+  ],
+  "points": [
+    {
+      "quoteId": "quote-cb2bf7e1",
+      "lx": 0.0411,
+      "ly": -0.2947,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-f37e164e",
+      "lx": -0.6695,
+      "ly": 0.3267,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-467a31c3",
+      "lx": 0.9808,
+      "ly": -0.1951,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-6f10f6d5",
+      "lx": -0.2267,
+      "ly": 0.3516,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-bcea54b4",
+      "lx": 0.4515,
+      "ly": -0.8923,
+      "cluster": 0
+    },
+    {
+      "quoteId": "quote-11ae8231",
+      "lx": 0.1307,
+      "ly": -0.1551,
+      "cluster": 0
+    },
+    {
+      "quoteId": "quote-dd26a88c",
+      "lx": -0.2077,
+      "ly": 0.9782,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-c01bdab3",
+      "lx": 0.0406,
+      "ly": -0.3056,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-129ebc70",
+      "lx": -0.3806,
+      "ly": 0.0501,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-2063a22c",
+      "lx": -0.4243,
+      "ly": -0.4519,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-96ad11f4",
+      "lx": -0.7856,
+      "ly": -0.1075,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-e7d87672",
+      "lx": 0.1008,
+      "ly": 0.2753,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-8e1b85c5",
+      "lx": 0.6068,
+      "ly": 0.0832,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-3d8b75e4",
+      "lx": -0.1569,
+      "ly": 0.5013,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-1f0ee81c",
+      "lx": -0.3736,
+      "ly": -0.5637,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-269f99bb",
+      "lx": 0.5819,
+      "ly": 0.0718,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-c0bfa9b6",
+      "lx": 0.6146,
+      "ly": -0.3715,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-b02d6af3",
+      "lx": 0.999,
+      "ly": -0.0449,
+      "cluster": 1
+    },
+    {
+      "quoteId": "quote-2a687efa",
+      "lx": -0.3386,
+      "ly": 0.8081,
+      "cluster": 0
+    },
+    {
+      "quoteId": "quote-8eec36ed",
+      "lx": -0.3891,
+      "ly": 0.354,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-4c0e2a0e",
+      "lx": -0.1187,
+      "ly": -0.2067,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-2cc547c1",
+      "lx": -0.2251,
+      "ly": 0.1465,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-2e7cdc59",
+      "lx": 0.8626,
+      "ly": 0.1402,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-cdb01015",
+      "lx": -0.5234,
+      "ly": -0.3636,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-7f3d5ca",
+      "lx": 0.2363,
+      "ly": -0.2222,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-c7c1c1e3",
+      "lx": -0.2436,
+      "ly": 0.2393,
+      "cluster": 0
+    },
+    {
+      "quoteId": "quote-d12de119",
+      "lx": -0.2494,
+      "ly": -0.455,
+      "cluster": 3
+    },
+    {
+      "quoteId": "quote-1e09324",
+      "lx": -0.5024,
+      "ly": 0.0054,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-416a37a0",
+      "lx": 0.4871,
+      "ly": 0.5352,
+      "cluster": 2
+    },
+    {
+      "quoteId": "quote-d364d0f5",
+      "lx": -0.3187,
+      "ly": -0.2371,
+      "cluster": 2
+    }
+  ],
+  "neighbors": {
+    "quote-cb2bf7e1": [
+      "quote-cdb01015",
+      "quote-d12de119",
+      "quote-f37e164e",
+      "quote-d364d0f5",
+      "quote-1f0ee81c",
+      "quote-4c0e2a0e"
+    ],
+    "quote-f37e164e": [
+      "quote-2063a22c",
+      "quote-cb2bf7e1",
+      "quote-1f0ee81c",
+      "quote-1e09324",
+      "quote-4c0e2a0e",
+      "quote-dd26a88c"
+    ],
+    "quote-467a31c3": [
+      "quote-bcea54b4",
+      "quote-c0bfa9b6",
+      "quote-1f0ee81c",
+      "quote-c7c1c1e3",
+      "quote-11ae8231",
+      "quote-7f3d5ca"
+    ],
+    "quote-6f10f6d5": [
+      "quote-1e09324",
+      "quote-c01bdab3",
+      "quote-8eec36ed",
+      "quote-cb2bf7e1",
+      "quote-2cc547c1",
+      "quote-b02d6af3"
+    ],
+    "quote-bcea54b4": [
+      "quote-467a31c3",
+      "quote-c7c1c1e3",
+      "quote-2e7cdc59",
+      "quote-c0bfa9b6",
+      "quote-7f3d5ca",
+      "quote-11ae8231"
+    ],
+    "quote-11ae8231": [
+      "quote-c7c1c1e3",
+      "quote-2e7cdc59",
+      "quote-4c0e2a0e",
+      "quote-7f3d5ca",
+      "quote-2a687efa",
+      "quote-bcea54b4"
+    ],
+    "quote-dd26a88c": [
+      "quote-b02d6af3",
+      "quote-f37e164e",
+      "quote-8e1b85c5",
+      "quote-cb2bf7e1",
+      "quote-8eec36ed",
+      "quote-416a37a0"
+    ],
+    "quote-c01bdab3": [
+      "quote-2063a22c",
+      "quote-129ebc70",
+      "quote-e7d87672",
+      "quote-c7c1c1e3",
+      "quote-6f10f6d5",
+      "quote-f37e164e"
+    ],
+    "quote-129ebc70": [
+      "quote-3d8b75e4",
+      "quote-2063a22c",
+      "quote-96ad11f4",
+      "quote-c01bdab3",
+      "quote-e7d87672",
+      "quote-1e09324"
+    ],
+    "quote-2063a22c": [
+      "quote-c01bdab3",
+      "quote-f37e164e",
+      "quote-129ebc70",
+      "quote-3d8b75e4",
+      "quote-1f0ee81c",
+      "quote-e7d87672"
+    ],
+    "quote-96ad11f4": [
+      "quote-129ebc70",
+      "quote-2063a22c",
+      "quote-c01bdab3",
+      "quote-3d8b75e4",
+      "quote-2a687efa",
+      "quote-4c0e2a0e"
+    ],
+    "quote-e7d87672": [
+      "quote-3d8b75e4",
+      "quote-c01bdab3",
+      "quote-c0bfa9b6",
+      "quote-129ebc70",
+      "quote-d364d0f5",
+      "quote-b02d6af3"
+    ],
+    "quote-8e1b85c5": [
+      "quote-b02d6af3",
+      "quote-3d8b75e4",
+      "quote-dd26a88c",
+      "quote-c01bdab3",
+      "quote-467a31c3",
+      "quote-129ebc70"
+    ],
+    "quote-3d8b75e4": [
+      "quote-129ebc70",
+      "quote-e7d87672",
+      "quote-b02d6af3",
+      "quote-1f0ee81c",
+      "quote-c01bdab3",
+      "quote-8e1b85c5"
+    ],
+    "quote-1f0ee81c": [
+      "quote-8eec36ed",
+      "quote-1e09324",
+      "quote-cdb01015",
+      "quote-d12de119",
+      "quote-cb2bf7e1",
+      "quote-f37e164e"
+    ],
+    "quote-269f99bb": [
+      "quote-c7c1c1e3",
+      "quote-cb2bf7e1",
+      "quote-1f0ee81c",
+      "quote-cdb01015",
+      "quote-11ae8231",
+      "quote-4c0e2a0e"
+    ],
+    "quote-c0bfa9b6": [
+      "quote-e7d87672",
+      "quote-2e7cdc59",
+      "quote-bcea54b4",
+      "quote-467a31c3",
+      "quote-d364d0f5",
+      "quote-1f0ee81c"
+    ],
+    "quote-b02d6af3": [
+      "quote-dd26a88c",
+      "quote-8e1b85c5",
+      "quote-3d8b75e4",
+      "quote-c7c1c1e3",
+      "quote-8eec36ed",
+      "quote-6f10f6d5"
+    ],
+    "quote-2a687efa": [
+      "quote-c7c1c1e3",
+      "quote-11ae8231",
+      "quote-b02d6af3",
+      "quote-416a37a0",
+      "quote-c01bdab3",
+      "quote-cb2bf7e1"
+    ],
+    "quote-8eec36ed": [
+      "quote-1f0ee81c",
+      "quote-2cc547c1",
+      "quote-2e7cdc59",
+      "quote-6f10f6d5",
+      "quote-c7c1c1e3",
+      "quote-b02d6af3"
+    ],
+    "quote-4c0e2a0e": [
+      "quote-d12de119",
+      "quote-11ae8231",
+      "quote-2cc547c1",
+      "quote-d364d0f5",
+      "quote-cb2bf7e1",
+      "quote-cdb01015"
+    ],
+    "quote-2cc547c1": [
+      "quote-8eec36ed",
+      "quote-d12de119",
+      "quote-4c0e2a0e",
+      "quote-7f3d5ca",
+      "quote-c7c1c1e3",
+      "quote-cb2bf7e1"
+    ],
+    "quote-2e7cdc59": [
+      "quote-11ae8231",
+      "quote-bcea54b4",
+      "quote-c0bfa9b6",
+      "quote-1f0ee81c",
+      "quote-cb2bf7e1",
+      "quote-8eec36ed"
+    ],
+    "quote-cdb01015": [
+      "quote-cb2bf7e1",
+      "quote-1f0ee81c",
+      "quote-d12de119",
+      "quote-4c0e2a0e",
+      "quote-269f99bb",
+      "quote-d364d0f5"
+    ],
+    "quote-7f3d5ca": [
+      "quote-d12de119",
+      "quote-2cc547c1",
+      "quote-bcea54b4",
+      "quote-c7c1c1e3",
+      "quote-11ae8231",
+      "quote-4c0e2a0e"
+    ],
+    "quote-c7c1c1e3": [
+      "quote-2a687efa",
+      "quote-11ae8231",
+      "quote-bcea54b4",
+      "quote-c01bdab3",
+      "quote-269f99bb",
+      "quote-2cc547c1"
+    ],
+    "quote-d12de119": [
+      "quote-cb2bf7e1",
+      "quote-7f3d5ca",
+      "quote-2cc547c1",
+      "quote-cdb01015",
+      "quote-1f0ee81c",
+      "quote-4c0e2a0e"
+    ],
+    "quote-1e09324": [
+      "quote-1f0ee81c",
+      "quote-d364d0f5",
+      "quote-6f10f6d5",
+      "quote-cb2bf7e1",
+      "quote-f37e164e",
+      "quote-416a37a0"
+    ],
+    "quote-416a37a0": [
+      "quote-d364d0f5",
+      "quote-1e09324",
+      "quote-2a687efa",
+      "quote-c7c1c1e3",
+      "quote-dd26a88c",
+      "quote-2cc547c1"
+    ],
+    "quote-d364d0f5": [
+      "quote-416a37a0",
+      "quote-1e09324",
+      "quote-cb2bf7e1",
+      "quote-4c0e2a0e",
+      "quote-c0bfa9b6",
+      "quote-cdb01015"
+    ]
+  }
+}

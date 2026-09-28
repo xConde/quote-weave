@@ -1,0 +1,39 @@
+{
+  "quoteIdPattern": "^quote-[a-f0-9]{1,8}$",
+  "authorIdPattern": "^author-[a-z0-9]+(?:-[a-z0-9]+)*$",
+  "attributionStatuses": ["sourced", "reported", "unverified"],
+  "disallowedSourceHosts": ["the.hitchcock.zone"],
+  "map": {
+    "schemaVersion": 2,
+    "generatorVersion": "quote-map-v3",
+    "clusterCount": 4,
+    "neighborsPerQuote": 6,
+    "seed": 42,
+    "modelId": "Xenova/all-MiniLM-L6-v2",
+    "modelRevision": "751bff37182d3f1213fa05d7196b954e230abad9",
+    "tooling": {
+      "@xenova/transformers": "2.17.2",
+      "umap-js": "1.4.0"
+    },
+    "assetDigest": "sha256:b0a3a47e56a59270e4bc49c85add1960e59c11da2bdd3682322feb61761f4790",
+    "labelReviewCorpusDigest": "sha256:fbf28180d4c421fa6d122a013f8118a27e691febe8f932559f08e8533d858d04",
+    "clusterLabels": [
+      {
+        "label": "Weathering What Comes",
+        "blurb": "Courage, fate, and choosing a steady response."
+      },
+      {
+        "label": "Language & Systems",
+        "blurb": "How code, language, and restraint shape what we can make."
+      },
+      {
+        "label": "The Examined Frame",
+        "blurb": "Attention, judgment, and the craft of deciding what belongs in view."
+      },
+      {
+        "label": "Worlds in Motion",
+        "blurb": "Change, responsibility, love, and the realities we inhabit."
+      }
+    ]
+  }
+}

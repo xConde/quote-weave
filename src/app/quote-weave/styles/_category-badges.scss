@@ -1,0 +1,85 @@
+@use './tokens' as *;
+
+// =============================================================================
+// Category Badge System — shared between the parent quote stream, the
+// CategoryBrowser pills, and the FavoritesPanel item meta row.
+//
+// Consumers do:
+//   @use '../../styles/category-badges' as *;
+//
+// (or the appropriate relative depth) to pull these rules in.
+// =============================================================================
+
+.category-badge {
+  font-family: $font-body;
+  font-size: $type-badge;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: $space-xs $space-sm;
+  border-radius: $radius-pill;
+  // Spacing from a preceding sibling — favorites-panel / category-browser place the
+  // badge inline next to text with no flex gap. The quotes-stream column meta zeroes
+  // this (it uses row-gap) — see quotes-stream `.quote-meta .category-badge`.
+  margin-left: $space-sm;
+
+  // Default fallback
+  background: var(--dramatic-border-color);
+  color: var(--text-color);
+}
+
+.category-programming {
+  background: rgba(71, 85, 105, 0.15);
+  color: rgb(51, 65, 85);
+}
+
+.category-philosophy {
+  background: rgba(180, 83, 9, 0.12);
+  color: rgb(146, 64, 14);
+}
+
+.category-stoicism {
+  background: rgba(120, 113, 108, 0.15);
+  color: rgb(87, 83, 78);
+}
+
+.category-science-fiction {
+  background: rgba(59, 130, 246, 0.12);
+  // Darkened from rgb(37,99,235) — day-mode composited bg #f4f2f7 gives 4.19:1 (fails AA).
+  // rgb(29,78,216) → 5.44:1 against the composited badge background. Hue preserved.
+  color: rgb(29, 78, 216);
+}
+
+.category-filmmaking {
+  background: rgba(234, 88, 12, 0.12);
+  // Darkened from rgb(194,65,12) — day-mode composited bg #f9e3ce gives 4.17:1 (fails AA).
+  // rgb(160,54,10) → 5.59:1 against the composited badge background. Orange hue preserved.
+  color: rgb(160, 54, 10);
+}
+
+:host-context(.night-mode) {
+  .category-programming {
+    background: rgba(148, 163, 184, 0.2);
+    color: rgb(203, 213, 225);
+  }
+
+  .category-philosophy {
+    background: rgba(251, 191, 36, 0.15);
+    color: rgb(252, 211, 77);
+  }
+
+  .category-stoicism {
+    background: rgba(168, 162, 158, 0.2);
+    color: rgb(214, 211, 209);
+  }
+
+  .category-science-fiction {
+    background: rgba(96, 165, 250, 0.15);
+    color: rgb(147, 197, 253);
+  }
+
+  .category-filmmaking {
+    background: rgba(251, 146, 60, 0.15);
+    color: rgb(253, 186, 116);
+  }
+}

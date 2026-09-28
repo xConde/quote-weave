@@ -1,0 +1,199 @@
+@use '../../styles/tokens' as *;
+@use '../../styles/category-badges' as *;
+@use '../../styles/panel-base' as *;
+
+:host {
+  display: contents;
+}
+
+.favorites-backdrop {
+  @include panel-backdrop;
+}
+
+.favorites-panel {
+  position: fixed;
+  top: clamp(1rem, 7.5vh, 9.5rem);
+  left: 50%;
+  transform: translate(-50%, -40px) scale(0.97);
+  opacity: 0;
+  width: clamp(15rem, 85vw, 45rem);
+  max-height: min(85vh, calc(100dvh - 2rem));
+  background: var(--text-area-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  z-index: 1001;
+  padding: $space-lg;
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--dramatic-border-color) 65%, transparent);
+  overflow-y: auto;
+  @include panel-scrollbar;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  transition:
+    opacity $duration-entrance $ease-smooth,
+    transform $duration-entrance $ease-smooth;
+
+  &.open {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  @media (max-width: 480px) {
+    padding: $space-base;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.favorites-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $space-sm;
+  border-bottom: 1px solid var(--border-color);
+
+  .favorites-panel-title {
+    font-family: $font-body;
+    font-size: calc(var(--font-size) * 0.9);
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .close-btn {
+    @include panel-close-btn;
+  }
+}
+
+.favorites-storage-warning {
+  margin: 0;
+  padding: $space-sm $space-base;
+  border: 1px dashed var(--dramatic-border-color);
+  color: var(--text-color);
+  background: var(--bg-color);
+  font-family: $font-body;
+  font-size: $type-author;
+  line-height: 1.45;
+}
+
+.favorites-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-xl $space-base;
+  text-align: center;
+  color: var(--text-color);
+
+  .favorites-empty-icon {
+    line-height: 0;
+    color: rgb(220, 60, 60);
+    opacity: 0.4;
+    margin-bottom: $space-sm;
+
+    svg {
+      display: block;
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  .favorites-empty-title {
+    font-family: $font-body;
+    font-size: calc(var(--font-size) * 0.95);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .favorites-empty-hint {
+    font-family: $font-body;
+    font-size: $type-author;
+    margin: 0;
+    opacity: 0.86;
+    max-width: 22rem;
+    line-height: 1.45;
+  }
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.favorites-item {
+  padding: $space-md;
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  background: var(--bg-color);
+
+  .favorites-item-text {
+    font-family: $font-reading;
+    font-size: $type-quote-previous;
+    line-height: 1.4;
+    margin: 0 0 $space-sm;
+    color: var(--text-color);
+  }
+
+  .favorites-item-meta {
+    font-family: $font-body;
+    font-size: $type-author;
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    flex-wrap: wrap;
+
+    .favorites-item-author::before {
+      content: '\2014\00a0';
+    }
+  }
+}
+
+// Inline action buttons in favorites items reuse the same shape used by
+// the parent quote stream — duplicated here so the child is self-contained.
+.favorite-btn,
+.share-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: $space-sm;
+  min-width: $touch-target-min;
+  min-height: $touch-target-min;
+  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  transition: opacity $duration-micro $ease-smooth;
+
+  &:hover {
+    background: var(--dramatic-border-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-color);
+    outline-offset: 3px;
+  }
+
+  .icon svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.favorite-btn.is-favorited {
+  color: rgb(220, 60, 60);
+}
+
+.quote-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-xs;
+  margin-left: auto;
+}
+
+// Category badge classes come from the shared partial (@use'd at top).

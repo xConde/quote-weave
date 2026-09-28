@@ -1,0 +1,70 @@
+@if (open()) {
+  <div class="reading-controls-backdrop" (click)="close.emit()"></div>
+  <div
+    class="reading-controls-panel"
+    [class.open]="open()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qw-reading-controls-title"
+    [appFocusTrap]="true"
+  >
+    <div class="reading-controls-header">
+      <span class="reading-controls-title" id="qw-reading-controls-title">Reading pace</span>
+      <button class="close-btn" aria-label="Close reading settings" (click)="close.emit()">
+        <span class="icon" [innerHTML]="closeIcon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="reading-controls-body">
+      <div class="control-group">
+        <span class="control-label">Typewriter speed</span>
+        <div class="speed-pills" role="group" aria-label="Typewriter speed">
+          <button
+            class="speed-pill"
+            [class.is-active]="settings().typingSpeedMs === 80"
+            [attr.aria-pressed]="settings().typingSpeedMs === 80"
+            (click)="typingSpeedChange.emit(80)"
+          >
+            Slow
+          </button>
+          <button
+            class="speed-pill"
+            [class.is-active]="settings().typingSpeedMs === 50"
+            [attr.aria-pressed]="settings().typingSpeedMs === 50"
+            (click)="typingSpeedChange.emit(50)"
+          >
+            Normal
+          </button>
+          <button
+            class="speed-pill"
+            [class.is-active]="settings().typingSpeedMs === 25"
+            [attr.aria-pressed]="settings().typingSpeedMs === 25"
+            (click)="typingSpeedChange.emit(25)"
+          >
+            Fast
+          </button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-copy">
+          <span class="control-label">Auto-wander</span>
+          <span class="control-note">Move to another quote after a short pause.</span>
+        </span>
+        <button
+          class="toggle-btn"
+          role="switch"
+          [class.is-on]="settings().autoAdvance"
+          [attr.aria-checked]="settings().autoAdvance"
+          [attr.aria-label]="settings().autoAdvance ? 'Disable auto-wander' : 'Enable auto-wander'"
+          (click)="autoAdvanceChange.emit(!settings().autoAdvance)"
+        >
+          <span class="toggle-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <span class="toggle-label">{{ settings().autoAdvance ? 'On' : 'Off' }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+}

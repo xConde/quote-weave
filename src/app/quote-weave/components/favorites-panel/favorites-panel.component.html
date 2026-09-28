@@ -1,0 +1,54 @@
+@if (open()) {
+  <div class="favorites-backdrop" (click)="close.emit()"></div>
+  <div
+    class="favorites-panel"
+    [class.open]="open()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qw-favorites-panel-title"
+    [appFocusTrap]="true"
+  >
+    <div class="favorites-panel-header">
+      <span class="favorites-panel-title" id="qw-favorites-panel-title">Saved quotes</span>
+      <button class="close-btn" aria-label="Close favorites" (click)="close.emit()">
+        <span class="icon" [innerHTML]="icon('x', 16)" aria-hidden="true"></span>
+      </button>
+    </div>
+    @if (loadWarning(); as warning) {
+      <p class="favorites-storage-warning" role="status" aria-live="polite">{{ warning }}</p>
+    }
+    @if (favorites().length === 0) {
+      <div class="favorites-empty">
+        <span class="favorites-empty-icon" [innerHTML]="icon('heart', 56)" aria-hidden="true"></span>
+        <p class="favorites-empty-title">{{ loadWarning() ? 'No saved quotes available' : 'Nothing saved yet' }}</p>
+        <p class="favorites-empty-hint">
+          @if (loadWarning()) {
+            You can still use the heart. The reader will tell you if a new save is only for this visit.
+          } @else {
+            Use the heart on a quote and it will stay here on this device.
+          }
+        </p>
+      </div>
+    } @else {
+      <div class="favorites-list">
+        @for (fav of favorites(); track fav.id) {
+          <article class="favorites-item">
+            <blockquote class="favorites-item-text">“{{ fav.text }}”</blockquote>
+            <p class="favorites-item-meta">
+              <span class="favorites-item-author">{{ fav.author }}</span>
+              <span [class]="categoryClass(fav.category)">{{ fav.category }} shelf</span>
+              <span class="quote-actions">
+                <button class="favorite-btn is-favorited" aria-label="Remove from favorites" (click)="remove.emit(fav)">
+                  <span class="icon" [innerHTML]="icon('heart-fill', 16)" aria-hidden="true"></span>
+                </button>
+                <button class="share-btn" aria-label="Share this quote" (click)="share.emit(fav)">
+                  <span class="icon" [innerHTML]="icon('share', 16)" aria-hidden="true"></span>
+                </button>
+              </span>
+            </p>
+          </article>
+        }
+      </div>
+    }
+  </div>
+}

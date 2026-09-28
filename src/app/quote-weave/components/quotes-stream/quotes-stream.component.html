@@ -1,0 +1,114 @@
+<div class="quotes-container" #quotesContainer [class.initial-entrance]="isInitialAnimation()">
+  @if (currentQuote(); as quote) {
+    <article class="current-quote">
+      <blockquote class="quote-text" aria-live="polite" aria-atomic="true">
+        <span class="quote-measure" aria-hidden="true">“{{ quote.text }}”</span>
+        <span class="typed-text" [class.typing]="!typingComplete()" aria-hidden="true"
+          >“{{ displayedText() }}{{ typingComplete() ? '”' : '' }}</span
+        >
+        <span class="sr-only">{{ liveAnnouncement() }}</span>
+      </blockquote>
+      <div class="quote-footer">
+        <span class="attribution">
+          <span class="attribution-dash" aria-hidden="true"></span>
+          <span
+            class="author-name"
+            [class.author-link]="isRealPerson()(quote.author)"
+            [style.cursor]="isRealPerson()(quote.author) ? 'pointer' : 'default'"
+            [attr.role]="isRealPerson()(quote.author) ? 'button' : null"
+            [attr.tabindex]="isRealPerson()(quote.author) ? 0 : null"
+            (click)="onAuthorClick(quote.author)"
+            (keydown.enter)="onAuthorKeydownEnter(quote.author)"
+            (keydown.space)="onAuthorKeydownSpace($event, quote.author)"
+            >{{ quote.author }}</span
+          >
+        </span>
+        <span class="quote-footer-end">
+          <span class="quote-actions">
+            <button
+              class="favorite-btn"
+              [class.is-favorited]="isFavorite()(quote)"
+              [attr.aria-label]="isFavorite()(quote) ? 'Remove from favorites' : 'Add to favorites'"
+              (click)="favoriteToggle.emit(quote)"
+            >
+              @if (isFavorite()(quote)) {
+                <span class="icon" [innerHTML]="icon('heart-fill', 20)" aria-hidden="true"></span>
+              } @else {
+                <span class="icon" [innerHTML]="icon('heart', 20)" aria-hidden="true"></span>
+              }
+            </button>
+            <button class="share-btn" aria-label="Share this quote" (click)="sharePreview.emit(quote)">
+              <span class="icon" [innerHTML]="icon('share', 20)" aria-hidden="true"></span>
+            </button>
+          </span>
+        </span>
+      </div>
+      <p
+        class="quote-source"
+        [class.is-pending]="!typingComplete()"
+        [class.quote-source--unverified]="quote.attributionStatus !== 'sourced'"
+        [attr.aria-hidden]="!typingComplete() ? 'true' : null"
+        [attr.inert]="!typingComplete() ? '' : null"
+      >
+        @if (quote.source?.url; as sourceUrl) {
+          <a [href]="sourceUrl" target="_blank" rel="noopener noreferrer">{{ sourceLabel(quote) }}</a>
+        } @else {
+          {{ sourceLabel(quote) }}
+        }
+        @if (sourceDetails(quote); as details) {
+          @if (details.length > 0) {
+            <span class="quote-source-details">
+              @for (detail of details; track $index) {
+                <span>{{ detail }}</span>
+              }
+            </span>
+          }
+        }
+      </p>
+      <section
+        class="related-quotes"
+        [class.is-pending]="!typingComplete() || relatedQuotes().length === 0"
+        [class.is-ready]="typingComplete() && relatedQuotes().length > 0"
+        [attr.aria-hidden]="!typingComplete() || relatedQuotes().length === 0 ? 'true' : null"
+        [attr.inert]="!typingComplete() || relatedQuotes().length === 0 ? '' : null"
+        aria-labelledby="qw-related-title"
+      >
+        <h2 class="related-label" id="qw-related-title">Nearby threads</h2>
+        @if (relatedQuotes().length > 0) {
+          @for (rel of relatedQuotes(); track rel.quoteId) {
+            <button
+              class="related-chip"
+              [attr.aria-label]="'Jump to: ' + rel.quote.author + ', ' + rel.quote.text"
+              (click)="jumpToQuote.emit(rel.quote)"
+            >
+              <span class="related-chip-author">{{ rel.quote.author }}</span>
+              <span class="related-chip-excerpt">{{ quoteExcerpt(rel.quote) }}</span>
+            </button>
+          }
+        } @else {
+          <span class="related-placeholder" aria-hidden="true"></span>
+          <span class="related-placeholder" aria-hidden="true"></span>
+          <span class="related-placeholder" aria-hidden="true"></span>
+        }
+      </section>
+    </article>
+  }
+</div>
+
+@if (!isAnyPanelOpen()) {
+  <nav class="reader-navigation" aria-label="Quote navigation">
+    <button class="reader-nav-btn" [disabled]="!canGoBack()" (click)="previousQuote.emit()">← Earlier</button>
+    <button class="reader-nav-btn reader-nav-btn--next" (click)="anotherQuote.emit()">Another quote →</button>
+  </nav>
+}
+
+@if (autoCyclePaused() && !isAnyPanelOpen()) {
+  <button
+    class="resume-arrow-btn"
+    aria-label="Resume auto-cycle"
+    [class.arrow-bounce]="autoCyclePaused()"
+    (click)="onResumeArrow()"
+  >
+    <span class="icon" [innerHTML]="icon('arrow-down', 16)"></span>
+  </button>
+}

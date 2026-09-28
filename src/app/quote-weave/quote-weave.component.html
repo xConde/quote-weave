@@ -1,0 +1,172 @@
+<div class="outer-wrapper">
+  <header class="reader-masthead">
+    <h1 class="edition-mark">
+      <span class="edition-title">Quote Weave</span>
+      <span class="edition-subtitle">A slow reader for borrowed words</span>
+    </h1>
+    @if (currentQuoteData(); as quote) {
+      <span class="edition-category">{{ quote.category }}</span>
+    }
+  </header>
+
+  @if (quoteLoadState() === 'loading') {
+    <section class="loading-state loading-state--skeleton" role="status" aria-live="polite">
+      <span class="sr-only">Loading the quote collection…</span>
+      <div class="quote-skeleton" aria-hidden="true">
+        <div class="quote-skeleton-card">
+          <div class="quote-skeleton-body">
+            <span class="skeleton-line skeleton-line--full"></span>
+            <span class="skeleton-line skeleton-line--wide"></span>
+            <span class="skeleton-line skeleton-line--mid"></span>
+            <div class="quote-skeleton-footer">
+              <span class="skeleton-line skeleton-line--author"></span>
+              <span class="quote-skeleton-actions">
+                <span class="skeleton-dot"></span>
+                <span class="skeleton-dot"></span>
+              </span>
+            </div>
+            <span class="skeleton-line skeleton-line--source"></span>
+            <div class="quote-skeleton-related">
+              <span class="skeleton-chip"></span>
+              <span class="skeleton-chip"></span>
+              <span class="skeleton-chip"></span>
+            </div>
+          </div>
+        </div>
+        <div class="quote-skeleton-nav">
+          <span class="skeleton-nav-btn"></span>
+          <span class="skeleton-nav-btn"></span>
+        </div>
+        <div class="quote-skeleton-tools">
+          <span class="skeleton-line skeleton-line--label"></span>
+          <div class="quote-skeleton-tools-row">
+            <span class="skeleton-tool-btn"></span>
+            <span class="skeleton-tool-btn"></span>
+            <span class="skeleton-tool-btn"></span>
+            <span class="skeleton-tool-btn"></span>
+            <span class="skeleton-tool-btn"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  } @else if (quoteLoadState() === 'error') {
+    <section class="loading-state" role="alert">
+      <p>{{ quoteLoadError() }}</p>
+      <button type="button" class="retry-load-btn" (click)="retryQuoteLoad()">Try loading again</button>
+    </section>
+  }
+
+  @if (showContainer()) {
+    <qw-quotes-stream
+      [displayedText]="displayedText()"
+      [currentQuote]="currentQuoteData()"
+      [typingComplete]="typingComplete()"
+      [autoCyclePaused]="autoCyclePaused()"
+      [isInitialAnimation]="isInitialAnimation()"
+      [isAnyPanelOpen]="isAnyPanelOpen()"
+      [canGoBack]="canGoBack()"
+      [isFavorite]="isFavoriteFn"
+      [isRealPerson]="isRealPersonFn"
+      [relatedQuotes]="relatedQuotes()"
+      (favoriteToggle)="toggleFavorite($event)"
+      (sharePreview)="openSharePreview($event)"
+      (openAuthor)="openAuthorWiki($event)"
+      (jumpToQuote)="jumpToQuote($event)"
+      (previousQuote)="goToPreviousQuote()"
+      (anotherQuote)="showAnotherQuote()"
+    />
+
+    <p
+      class="favorite-persistence-notice"
+      [class.is-visible]="favoritePersistenceNotice() !== null"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      {{ favoritePersistenceNotice() }}
+    </p>
+
+    @if (favoriteLoadWarning(); as warning) {
+      @if (!showFavorites()) {
+        <p class="favorite-storage-notice is-visible" role="status" aria-live="polite" aria-atomic="true">
+          {{ warning }}
+        </p>
+      }
+    }
+  }
+
+  @if (showContainer() && !isAnyPanelOpen()) {
+    <qw-control-row
+      [favoritesCount]="cachedFavorites().length"
+      [activeCategory]="activeCategory"
+      [favoritesActive]="showFavorites()"
+      [categoryBrowserActive]="showCategoryBrowser()"
+      [readingControlsActive]="showReadingControls()"
+      [keyboardHelpActive]="showKeyboardHelp()"
+      [ideaMapActive]="showIdeaMap()"
+      (toggleFavorites)="toggleFavorites()"
+      (toggleCategoryBrowser)="toggleCategoryBrowser()"
+      (toggleReadingControls)="toggleReadingControls()"
+      (toggleKeyboardHelp)="toggleKeyboardHelp()"
+      (toggleIdeaMap)="toggleIdeaMap()"
+    />
+  }
+
+  <qw-favorites-panel
+    [open]="showFavorites()"
+    [favorites]="cachedFavorites()"
+    [loadWarning]="favoriteLoadWarning()"
+    (close)="closeFavorites()"
+    (remove)="toggleFavorite($event)"
+    (share)="openSharePreview($event)"
+  />
+
+  <qw-category-browser
+    [open]="showCategoryBrowser()"
+    [categories]="categorySummaries()"
+    [activeCategory]="activeCategory"
+    [totalCount]="quotes().length"
+    (close)="closeCategoryBrowser()"
+    (select)="selectCategory($event)"
+  />
+
+  <qw-reading-controls
+    [open]="showReadingControls()"
+    [settings]="settings()"
+    (close)="closeReadingControls()"
+    (typingSpeedChange)="setTypingSpeed($event)"
+    (autoAdvanceChange)="setAutoAdvance($event)"
+  />
+
+  <qw-keyboard-help [open]="showKeyboardHelp()" (close)="closeKeyboardHelp()" />
+
+  <qw-share-preview
+    [open]="showSharePreview()"
+    [state]="shareCardState()"
+    [canNativeShare]="canNativeShare"
+    [copyStatus]="shareCopyStatus()"
+    [nativeShareStatus]="nativeShareStatus()"
+    (close)="closeSharePreview()"
+    (download)="downloadShareImage()"
+    (nativeShare)="nativeShare()"
+    (retry)="retryShareImage()"
+    (copyText)="copyShareText()"
+  />
+
+  <qw-author-panel
+    [open]="panelOpen()"
+    [loading]="loadingWiki()"
+    [title]="authorTitle()"
+    [imageUrl]="authorImageUrl()"
+    [content]="wikiContent()"
+    (close)="closePanel()"
+    (openWikipediaHome)="openWikipediaHome()"
+  />
+
+  <qw-idea-map
+    [open]="showIdeaMap()"
+    [currentQuote]="currentQuoteData()"
+    (close)="closeIdeaMap()"
+    (selectQuote)="jumpToQuote($event)"
+  />
+</div>

@@ -1,0 +1,58 @@
+@if (open()) {
+  <div class="wiki-backdrop" (click)="close.emit()"></div>
+  <div
+    class="wiki-panel"
+    [class.open]="open()"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="title() || 'Author information'"
+    [appFocusTrap]="true"
+  >
+    <!-- Header is ALWAYS visible whenever the panel is open — loading,
+         success, or error. Without this, an API error or timeout would
+         leave the user with no close button. -->
+    <div class="wiki-header">
+      @if (title()) {
+        <h4>{{ title() }}</h4>
+      } @else if (loading()) {
+        <h4 class="wiki-header-loading">Loading…</h4>
+      } @else {
+        <h4 class="wiki-header-fallback">Author info</h4>
+      }
+      <button type="button" class="wiki-logo-btn" aria-label="Open Wikipedia" (click)="openWikipediaHome.emit()">
+        Wikipedia ↗
+      </button>
+      <button class="close-btn" aria-label="Close Wikipedia panel" (click)="close.emit()">
+        <span class="icon" [innerHTML]="closeIcon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <!-- Body: skeleton during loading, real content otherwise. -->
+    @if (loading()) {
+      <div class="wiki-skeleton" role="status" aria-live="polite">
+        <div class="skeleton-body" aria-hidden="true">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-lines">
+            <div class="skeleton-line skeleton-line--full"></div>
+            <div class="skeleton-line skeleton-line--full"></div>
+            <div class="skeleton-line skeleton-line--mid"></div>
+            <div class="skeleton-line skeleton-line--full"></div>
+            <div class="skeleton-line skeleton-line--short"></div>
+          </div>
+        </div>
+        <span class="sr-only">Loading author info…</span>
+      </div>
+    } @else if (content()) {
+      <div class="wiki-content">
+        @if (imageUrl()) {
+          <img
+            [src]="imageUrl()"
+            [alt]="title() ? 'Portrait of ' + title() : 'Author portrait'"
+            class="wiki-author-image"
+          />
+        }
+        <div [innerHTML]="content()"></div>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,77 @@
+<p class="reader-tools-label" id="reader-tools-label">Reader tools</p>
+<nav class="control-row" aria-labelledby="reader-tools-label">
+  <button
+    class="favorites-btn"
+    [class.is-active]="favoritesActive()"
+    [class.has-favorites]="favoritesCount() > 0"
+    [attr.aria-expanded]="favoritesActive()"
+    aria-label="Open saved quotes"
+    (click)="toggleFavorites.emit()"
+  >
+    <span class="icon" [innerHTML]="icon('heart-fill', 22)" aria-hidden="true"></span>
+    <span class="control-copy">
+      <span class="control-label">Saved</span>
+      <span class="control-hint">Quotes</span>
+    </span>
+    <span class="favorites-count" aria-label="saved quote count">{{ favoritesCount() }}</span>
+  </button>
+
+  <button
+    class="filter-btn"
+    [class.is-active]="activeCategory() !== null"
+    [attr.aria-expanded]="categoryBrowserActive()"
+    aria-label="Choose a quote shelf"
+    (click)="toggleCategoryBrowser.emit()"
+  >
+    <span class="icon" [innerHTML]="icon('funnel', 22)" aria-hidden="true"></span>
+    <span class="control-copy">
+      <span class="control-label">Browse</span>
+      <span class="control-hint">Shelves</span>
+    </span>
+    @if (activeCategory() !== null) {
+      <span class="filter-label">{{ activeCategory() }}</span>
+    }
+  </button>
+
+  <button
+    class="settings-btn"
+    [class.is-active]="readingControlsActive()"
+    [attr.aria-expanded]="readingControlsActive()"
+    aria-label="Change reading pace"
+    (click)="toggleReadingControls.emit()"
+  >
+    <span class="icon" [innerHTML]="icon('sliders', 22)" aria-hidden="true"></span>
+    <span class="control-copy">
+      <span class="control-label">Reading</span>
+      <span class="control-hint">Pace</span>
+    </span>
+  </button>
+
+  <button
+    class="help-btn"
+    [class.is-active]="keyboardHelpActive()"
+    [attr.aria-expanded]="keyboardHelpActive()"
+    aria-label="Show keyboard shortcuts"
+    (click)="toggleKeyboardHelp.emit()"
+  >
+    <span class="icon" [innerHTML]="icon('keyboard', 22)" aria-hidden="true"></span>
+    <span class="control-copy">
+      <span class="control-label">Shortcuts</span>
+      <span class="control-hint">Keys</span>
+    </span>
+  </button>
+
+  <button
+    class="idea-map-btn"
+    [class.is-active]="ideaMapActive()"
+    [attr.aria-expanded]="ideaMapActive()"
+    aria-label="Open idea threads"
+    (click)="toggleIdeaMap.emit()"
+  >
+    <span class="icon" [innerHTML]="icon('map', 22)" aria-hidden="true"></span>
+    <span class="control-copy">
+      <span class="control-label">Threads</span>
+      <span class="control-hint">Idea map</span>
+    </span>
+  </button>
+</nav>

@@ -1,0 +1,27 @@
+@if (open()) {
+  <div class="keyboard-help-backdrop" (click)="emitClose()"></div>
+  <div
+    class="keyboard-help-panel"
+    [class.open]="open()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qw-keyboard-help-title"
+    [appFocusTrap]="true"
+  >
+    <div class="keyboard-help-header">
+      <span class="keyboard-help-title" id="qw-keyboard-help-title">Keyboard shortcuts</span>
+      <button class="close-btn" aria-label="Close keyboard help" (click)="emitClose()">
+        <span class="icon" [innerHTML]="closeIcon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <ul class="shortcut-list">
+      <li><kbd>→</kbd> / <kbd>Space</kbd> <span>Next quote</span></li>
+      <li><kbd>←</kbd> <span>Previous quote</span></li>
+      <li><kbd>F</kbd> <span>Save or remove quote</span></li>
+      <li><kbd>C</kbd> <span>Choose a shelf</span></li>
+      <li><kbd>S</kbd> <span>Change reading pace</span></li>
+      <li><kbd>Esc</kbd> <span>Close panel</span></li>
+      <li><kbd>?</kbd> <span>This help</span></li>
+    </ul>
+  </div>
+}

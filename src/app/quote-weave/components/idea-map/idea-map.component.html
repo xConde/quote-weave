@@ -1,0 +1,136 @@
+@if (open()) {
+  <div class="idea-map-backdrop" (click)="close.emit()"></div>
+
+  <div
+    class="idea-map-panel"
+    [class.open]="open()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Quote threads"
+    [appFocusTrap]="true"
+  >
+    <!-- Header -->
+    <div class="idea-map-header">
+      <div class="idea-map-header-text">
+        <h3 class="idea-map-title">Threads</h3>
+        <p class="idea-map-explainer">See how the lines group together, or go straight to the list.</p>
+      </div>
+      <button class="idea-map-close-btn" aria-label="Close quote threads" (click)="close.emit()">
+        <span class="icon" [innerHTML]="icon('x', 16)" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="idea-map-body" [class.has-directory]="status() === 'ready'" [attr.aria-busy]="status() === 'loading'">
+      <!-- The canvas is a visual enhancement. Every point is also available in the thread index. -->
+      <div class="canvas-wrapper" #canvasWrapper>
+        <canvas
+          #mapCanvas
+          class="map-canvas"
+          aria-hidden="true"
+          (click)="onCanvasClick($event)"
+          (pointermove)="onCanvasPointerMove($event)"
+          (pointerleave)="onCanvasPointerLeave()"
+        ></canvas>
+
+        @if (status() === 'ready' && tooltip().visible) {
+          <div class="map-tooltip" role="tooltip" [style.left.px]="tooltip().x" [style.top.px]="tooltip().y">
+            <span class="tooltip-cluster">{{ tooltip().clusterLabel }}</span>
+            <p class="tooltip-text">“{{ tooltip().text }}”</p>
+            <span class="tooltip-author">{{ tooltip().author }}</span>
+          </div>
+        }
+
+        @if (status() === 'ready') {
+          <span class="sr-only">{{ srSummary() }}</span>
+        }
+
+        @switch (status()) {
+          @case ('idle') {
+            <div class="map-status" role="status" aria-live="polite">
+              <p>Preparing the idea map…</p>
+            </div>
+          }
+          @case ('loading') {
+            <div class="map-status" role="status" aria-live="polite">
+              <p>Loading the quote threads…</p>
+            </div>
+          }
+          @case ('error') {
+            <div class="map-status map-status-error" role="alert">
+              <h4>The map did not load</h4>
+              <p>{{ errorMessage() }}</p>
+              <button type="button" class="map-retry-btn" (click)="retryLoad()">Try again</button>
+            </div>
+          }
+        }
+      </div>
+
+      @if (status() === 'ready') {
+        <aside class="map-directory" aria-labelledby="map-directory-title">
+          <div class="directory-intro">
+            <h4 id="map-directory-title">Choose a thread</h4>
+            <p>Each one gathers a few lines that sit well together.</p>
+          </div>
+
+          <ul class="cluster-legend" aria-label="Quote threads">
+            @for (cluster of clusters(); track cluster.id) {
+              <li>
+                <button
+                  type="button"
+                  class="legend-item"
+                  [class.is-highlighted]="highlightedCluster() === cluster.id"
+                  [class.is-dimmed]="highlightedCluster() !== null && highlightedCluster() !== cluster.id"
+                  [attr.aria-pressed]="highlightedCluster() === cluster.id"
+                  [attr.aria-controls]="highlightedCluster() === cluster.id ? 'quote-thread-' + cluster.id : null"
+                  [attr.aria-label]="cluster.label + ', ' + cluster.count + ' quotes'"
+                  (click)="onLegendClick(cluster.id)"
+                  (keydown)="onLegendKeydown($event, cluster.id)"
+                >
+                  <span class="legend-swatch" [style.color]="clusterColor(cluster.id)" aria-hidden="true"></span>
+                  <span class="legend-label">{{ cluster.label }}</span>
+                  <span class="legend-count">{{ cluster.count }} lines</span>
+                </button>
+              </li>
+            }
+          </ul>
+
+          <div class="thread-directory">
+            @if (activeThread(); as thread) {
+              <section [id]="'quote-thread-' + thread.cluster.id" [attr.aria-label]="thread.cluster.label">
+                <ul class="quote-thread-list">
+                  @for (quote of thread.quotes; track quote.id) {
+                    <li>
+                      <button
+                        type="button"
+                        class="thread-quote"
+                        [class.is-current]="isCurrentQuote(quote)"
+                        [attr.aria-current]="isCurrentQuote(quote) ? 'true' : null"
+                        [attr.aria-label]="'Read quote by ' + quote.author + ': ' + quote.text"
+                        (click)="selectFromDirectory(quote)"
+                        (keydown)="onQuoteKeydown($event, quote)"
+                      >
+                        <span class="thread-excerpt">“{{ quoteExcerpt(quote.text) }}”</span>
+                        <span class="thread-meta">
+                          <span class="thread-author">{{ quote.author }}</span>
+                          @if (isCurrentQuote(quote)) {
+                            <span class="thread-current-marker">
+                              <span class="current-quote-ring" aria-hidden="true"></span>
+                              Reading now
+                            </span>
+                          }
+                        </span>
+                      </button>
+                    </li>
+                  }
+                </ul>
+              </section>
+            } @else {
+              <p class="thread-empty">Choose a thread to read its quotes without using the visual map.</p>
+            }
+          </div>
+        </aside>
+      }
+    </div>
+  </div>
+}

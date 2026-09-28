@@ -1,0 +1,244 @@
+@use './tokens' as *;
+
+// =============================================================================
+// First-load skeleton — reserves the footprint of the loaded quote card,
+// reader navigation, and reader-tools row so the page doesn't pop/reflow once
+// the HTTP load resolves. Paper-toned (border + text-area background) to
+// match the reader's palette instead of a generic shimmering gray box.
+//
+// Consumer: quote-weave.component.html, gated on quoteLoadState() === 'loading'.
+// =============================================================================
+
+.quote-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.quote-skeleton-card {
+  width: min(52rem, calc(100% - #{$space-base * 2}));
+  border: 1px solid var(--dramatic-border-color);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 23px,
+      color-mix(in srgb, var(--border-color) 26%, transparent) 24px
+    ),
+    var(--text-area-color);
+}
+
+.quote-skeleton-body {
+  display: flex;
+  flex-direction: column;
+  padding: $space-xl clamp($space-lg, 5vw, 3.75rem) clamp($space-xl, 6vw, 4.5rem);
+}
+
+.skeleton-line {
+  position: relative;
+  display: block;
+  height: 1.85rem;
+  margin-bottom: $space-sm;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--dramatic-border-color) 55%, transparent);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--text-area-color) 70%, transparent),
+      transparent
+    );
+    content: '';
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+.skeleton-line--full {
+  width: 100%;
+}
+.skeleton-line--wide {
+  width: 88%;
+}
+.skeleton-line--mid {
+  width: 58%;
+  margin-bottom: $space-lg;
+}
+.skeleton-line--author {
+  width: 7rem;
+  height: 1rem;
+  margin-bottom: 0;
+}
+.skeleton-line--source {
+  width: 40%;
+  height: 0.8rem;
+  margin-top: $space-sm;
+  margin-bottom: 0;
+}
+.skeleton-line--label {
+  width: 6rem;
+  height: 1.75rem;
+  margin-bottom: 0;
+}
+
+.quote-skeleton-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm $space-lg;
+  min-height: $touch-target-min;
+  margin-bottom: 0;
+}
+
+.quote-skeleton-actions {
+  display: inline-flex;
+  gap: $space-sm;
+}
+
+.skeleton-dot {
+  position: relative;
+  width: $touch-target-min;
+  height: $touch-target-min;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--dramatic-border-color) 40%, transparent);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--text-area-color) 70%, transparent),
+      transparent
+    );
+    content: '';
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+.quote-skeleton-related {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-sm;
+  margin-top: $space-md;
+  padding-top: $space-md;
+  border-top: 1px solid var(--dramatic-border-color);
+}
+
+.skeleton-chip {
+  position: relative;
+  min-height: 8.75rem;
+  overflow: hidden;
+  border: 1px solid var(--dramatic-border-color);
+  background: color-mix(in srgb, var(--dramatic-border-color) 22%, transparent);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--text-area-color) 60%, transparent),
+      transparent
+    );
+    content: '';
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+.quote-skeleton-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(52rem, calc(100% - #{$space-base * 2}));
+  border-right: 1px solid var(--dramatic-border-color);
+  border-bottom: 1px solid var(--dramatic-border-color);
+  border-left: 1px solid var(--dramatic-border-color);
+  background: var(--text-area-color);
+}
+
+.skeleton-nav-btn {
+  min-height: $touch-target-min;
+  border-right: 1px solid var(--dramatic-border-color);
+
+  &:last-child {
+    border-right: 0;
+  }
+}
+
+.quote-skeleton-tools {
+  width: min(52rem, calc(100% - #{$space-base * 2}));
+  margin-top: $space-md;
+}
+
+.quote-skeleton-tools-row {
+  display: grid;
+  grid-template-columns: 1fr 1.12fr 1fr 1.08fr 1.16fr;
+  gap: $space-xs;
+  margin-top: $space-xs;
+}
+
+.skeleton-tool-btn {
+  position: relative;
+  min-height: $touch-target-min;
+  overflow: hidden;
+  border: 1px solid var(--dramatic-border-color);
+  background: var(--text-area-color);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--dramatic-border-color) 45%, transparent),
+      transparent
+    );
+    content: '';
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .quote-skeleton-card,
+  .quote-skeleton-nav,
+  .quote-skeleton-tools {
+    width: calc(100% - #{$space-base * 2});
+  }
+
+  .quote-skeleton-body {
+    padding: $space-lg $space-base $space-xl;
+  }
+
+  .quote-skeleton-related {
+    grid-template-columns: 1fr;
+  }
+
+  .skeleton-chip {
+    min-height: 7.5rem;
+  }
+
+  .quote-skeleton-tools-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-line::after,
+  .skeleton-dot::after,
+  .skeleton-chip::after,
+  .skeleton-tool-btn::after {
+    animation: none;
+  }
+}

@@ -1,0 +1,168 @@
+@use '../../styles/tokens' as *;
+@use '../../styles/category-badges' as *;
+@use '../../styles/panel-base' as *;
+
+:host {
+  display: contents;
+}
+
+.category-backdrop {
+  @include panel-backdrop;
+}
+
+.category-browser {
+  position: fixed;
+  top: clamp(1rem, 7.5vh, 9.5rem);
+  left: 50%;
+  transform: translate(-50%, -40px) scale(0.97);
+  opacity: 0;
+  width: clamp(15rem, 80vw, 45rem);
+  max-height: min(85vh, calc(100dvh - 2rem));
+  background: var(--text-area-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  z-index: 1001;
+  padding: $space-lg $space-lg $space-lg;
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--dramatic-border-color) 65%, transparent);
+  overflow-y: auto;
+  @include panel-scrollbar;
+  transition:
+    opacity $duration-entrance $ease-smooth,
+    transform $duration-entrance $ease-smooth;
+
+  &.open {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (max-width: 480px) {
+    width: calc(100vw - #{$space-base * 2});
+    left: $space-base;
+    padding: $space-base;
+    border-radius: 0;
+    transform: translateY(-40px) scale(0.97);
+    opacity: 0;
+
+    &.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+.category-browser-description {
+  margin: 0 0 $space-lg;
+  font-family: $font-reading;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.category-browser-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $space-md;
+  margin-bottom: $space-lg;
+  border-bottom: 1px solid var(--border-color);
+
+  .category-browser-title {
+    font-family: $font-body;
+    font-size: calc(var(--font-size) * 0.95);
+    font-weight: 600;
+    color: var(--text-color);
+    letter-spacing: 0.02em;
+  }
+
+  .close-btn {
+    // 44px min comes from the panel-close-btn mixin now — no local override needed.
+    @include panel-close-btn;
+  }
+}
+
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+
+  @media (max-width: 480px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-sm;
+  }
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  padding: $space-sm $space-base;
+  min-height: $touch-target-min;
+  font-family: $font-body;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    opacity $duration-micro $ease-smooth,
+    transform $duration-micro $ease-smooth,
+    border-color $duration-base $ease-smooth,
+    background-color $duration-micro $ease-smooth,
+    box-shadow $duration-base $ease-smooth;
+  background: var(--bg-color);
+  color: var(--text-color);
+  // Category pills reuse the shared color classes, but not the inline badge
+  // spacing. Let the grid gap own all spacing here.
+  margin-left: 0;
+
+  .pill-count {
+    font-size: 0.7rem;
+    opacity: 1;
+    font-weight: 600;
+  }
+
+  &:hover {
+    background-color: var(--dramatic-border-color);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-color);
+    outline-offset: 3px;
+  }
+
+  &.is-active {
+    background: var(--text-color);
+    border-color: var(--text-color);
+    color: var(--bg-color);
+    opacity: 1;
+    box-shadow: 3px 3px 0 var(--dramatic-border-color);
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: space-between;
+    padding: $space-sm $space-md;
+    font-size: 0.72rem;
+    gap: $space-xs;
+
+    .pill-count {
+      font-size: 0.66rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

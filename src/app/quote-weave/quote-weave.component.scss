@@ -1,0 +1,230 @@
+@use './styles/tokens' as *;
+@use './styles/category-badges' as *;
+@use './styles/skeleton' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+// ::selection theming for this project lives in the shell's styles.scss
+// (element-scoped to the `quote-weave` host tag), NOT here — see the comment
+// there for why: `:host ::selection` cannot reach text rendered by child
+// components under Angular's emulated encapsulation.
+
+.outer-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // Center the quote card + control row in the filled height (the :host/.main-box
+  // flex chain makes this wrapper reach the footer). Without this the content clings
+  // to the top and leaves a large dead band below — on desktop and mobile alike.
+  justify-content: center;
+  padding-top: $space-xl;
+  padding-bottom: #{$space-xl + $space-base}; // 48px (max per design principles)
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  overflow-x: hidden;
+  // Keep fixed panel overlays inside the project-detail embed on WebKit/iOS.
+  transform: translateZ(0);
+
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-base;
+    min-height: 6rem;
+    margin-top: $space-lg;
+    font-size: 1rem;
+    color: var(--text-color);
+
+    p {
+      max-width: 34rem;
+      margin: 0;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .retry-load-btn {
+      min-height: 2.75rem;
+      padding: $space-sm $space-base;
+      border: 1px solid var(--dramatic-border-color);
+      border-radius: 0;
+      background: var(--text-area-color);
+      color: var(--text-color);
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 3px;
+      }
+    }
+  }
+
+  // The skeleton reserves the loaded card's exact footprint (border flush
+  // against the masthead, same as `qw-quotes-stream` once ready) so nothing
+  // shifts when the HTTP load resolves. The unadorned .loading-state above
+  // (error copy + retry button) keeps its breathing room.
+  .loading-state--skeleton {
+    width: 100%;
+    margin-top: 0;
+    gap: $space-sm;
+  }
+}
+
+.reader-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-base;
+  width: min(52rem, calc(100% - #{$space-base * 2}));
+  border: 1px solid var(--dramatic-border-color);
+  border-bottom: 0;
+  background: var(--text-area-color);
+}
+
+.edition-mark {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.edition-mark {
+  position: relative;
+  display: grid;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-content: center;
+  gap: 2px;
+  padding: $space-md $space-lg $space-md #{$space-lg + 6px};
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: $space-md;
+    width: 5px;
+    background: repeating-linear-gradient(0deg, var(--text-color) 0 3px, transparent 3px 6px);
+    content: '';
+    opacity: 0.78;
+  }
+}
+
+.edition-category {
+  flex: 0 0 auto;
+  padding: $space-md $space-lg;
+  color: var(--text-color);
+  font-family: $font-label;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.edition-title {
+  font-family: $font-reading;
+  font-size: 1.04rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+.edition-subtitle {
+  font-family: $font-label;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.075em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.favorite-persistence-notice,
+.favorite-storage-notice {
+  width: min(52rem, calc(100% - #{$space-base * 2}));
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--dramatic-border-color);
+  border-left: 1px solid var(--dramatic-border-color);
+  background: var(--text-area-color);
+  color: var(--text-color);
+  font-family: $font-label;
+  font-size: 0.72rem;
+  line-height: 1.45;
+
+  &.is-visible {
+    height: auto;
+    padding: $space-sm $space-base;
+    border-bottom: 1px dashed var(--dramatic-border-color);
+  }
+}
+
+@media (max-width: 640px) {
+  .outer-wrapper {
+    justify-content: flex-start;
+    // The project shell already reserves the site footer below this box. Keep
+    // the masthead and complete tool row inside that remaining height, and let
+    // the quote body own the only reader scrollbar.
+    padding-top: $space-base;
+    padding-bottom: $space-base;
+    overflow-y: hidden;
+  }
+
+  .reader-masthead {
+    width: calc(100% - #{$space-base * 2});
+    flex-shrink: 0;
+  }
+
+  .edition-category {
+    max-width: 42%;
+    padding: $space-md $space-base;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .favorite-persistence-notice,
+  .favorite-storage-notice {
+    width: calc(100% - #{$space-base * 2});
+    flex-shrink: 0;
+  }
+}
+
+// A phone turned sideways is wider than the portrait breakpoint but has much
+// less vertical room. Keep the masthead, notices, and tools fixed in the
+// project shell while the quote body owns the reader's only scrollbar.
+@media (max-height: 520px) {
+  .outer-wrapper {
+    justify-content: flex-start;
+    padding-top: $space-sm;
+    padding-bottom: $space-sm;
+    overflow-y: hidden;
+  }
+
+  .reader-masthead,
+  .favorite-persistence-notice,
+  .favorite-storage-notice {
+    flex-shrink: 0;
+  }
+
+  .edition-mark {
+    padding: $space-sm $space-base;
+  }
+
+  .edition-category {
+    padding-block: $space-sm;
+  }
+
+  .edition-mark {
+    padding-left: #{$space-lg + 4px};
+
+    &::before {
+      left: $space-sm;
+    }
+  }
+}

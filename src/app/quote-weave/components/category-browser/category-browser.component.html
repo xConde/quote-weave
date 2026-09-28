@@ -1,0 +1,47 @@
+@if (open()) {
+  <div class="category-backdrop" (click)="close.emit()"></div>
+  <div
+    class="category-browser"
+    [class.open]="open()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qw-category-browser-title"
+    aria-describedby="qw-category-browser-description"
+    [appFocusTrap]="true"
+  >
+    <div class="category-browser-header">
+      <span class="category-browser-title" id="qw-category-browser-title">Choose a shelf</span>
+      <button class="close-btn" aria-label="Close category browser" (click)="close.emit()">
+        <span class="icon" [innerHTML]="closeIcon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <p class="category-browser-description" id="qw-category-browser-description">
+      Shelves are broad subjects. Threads connect quotes by nearby ideas.
+    </p>
+    <div class="category-pills">
+      <button
+        class="category-pill"
+        [class.is-active]="activeCategory() === null"
+        [attr.aria-pressed]="activeCategory() === null"
+        (click)="select.emit(null)"
+      >
+        All shelves
+        <span class="pill-count">{{ totalCount() }}</span>
+      </button>
+      @for (entry of categories(); track entry.category) {
+        <button
+          [ngClass]="[
+            'category-pill',
+            categoryClass(entry.category),
+            activeCategory() === entry.category ? 'is-active' : '',
+          ]"
+          [attr.aria-pressed]="activeCategory() === entry.category"
+          (click)="select.emit(entry.category)"
+        >
+          {{ entry.category }}
+          <span class="pill-count">{{ entry.count }}</span>
+        </button>
+      }
+    </div>
+  </div>
+}
